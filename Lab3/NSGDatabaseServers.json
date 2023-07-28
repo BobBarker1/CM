@@ -1,0 +1,89 @@
+{
+  "securityRules": [
+    {
+      "name": "allow-sql",
+      "properties": {
+        "description": "Allow SQL traffic from the sn-webapp-01 subnet.",
+        "protocol": "Tcp",
+        "sourceAddressPrefix": "10.0.1.0/24",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.0.2.0/24",
+        "destinationPortRange": "1433",
+        "access": "Allow",
+        "priority": 100,
+        "direction": "Inbound"
+      }
+    },
+    {
+      "name": "allow-rdp",
+      "properties": {
+        "description": "Allow RDP from sn-jumpbox-00 subnet to sn-webapp-02 subnet.",
+        "protocol": "Tcp",
+        "sourceAddressPrefix": "10.1.0.0/24",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.0.2.0/24",
+        "destinationPortRange": "3389",
+        "access": "Allow",
+        "priority": 200,
+        "direction": "Inbound"
+      }
+    },
+    {
+      "name": "allow-insidesubnet",
+      "properties": {
+        "description": "Allow virtual machines on this subnet to talk to each other.",
+        "protocol": "*",
+        "sourceAddressPrefix": "10.0.2.0/24",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.0.2.0/24",
+        "destinationPortRange": "*",
+        "access": "Allow",
+        "priority": 300,
+        "direction": "Inbound"
+      }
+    },
+    {
+      "name": "allow_rdp_from_on-premise",
+      "properties": {
+        "description": "Allow inbound RDP from the company's on-premise LAN.",
+        "protocol": "Tcp",
+        "sourceAddressPrefix": "192.168.2.0/24",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.0.2.0/24",
+        "destinationPortRange": "3389",
+        "access": "Allow",
+        "priority": 400,
+        "direction": "Inbound"
+      }
+    },
+    {
+      "name": "allow_winrm_from_on-premise",
+      "properties": {
+        "description": "Allow inbound WinRM from the company's on-premise LAN.",
+        "protocol": "Tcp",
+        "sourceAddressPrefix": "192.168.2.0/24",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.0.2.0/24",
+        "destinationPortRange": "5985",
+        "access": "Allow",
+        "priority": 500,
+        "direction": "Inbound"
+      }
+    },
+    {
+      "name": "deny-tosubnet",
+      "properties": {
+        "description": "Prevent all other traffic from this virtual network.",
+        "protocol": "*",
+        "sourceAddressPrefix": "VirtualNetwork",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.0.2.0/24",
+        "destinationPortRange": "*",
+        "access": "Deny",
+        "priority": 4000,
+        "direction": "Inbound"
+      }
+    }
+  ]
+}
+

@@ -1,0 +1,75 @@
+{
+  "securityRules": [
+    {
+      "name": "allow-http",
+      "properties": {
+        "description": "Allow HTTP traffic from the sn-webapp-00 (web application gateway) subnet into the sn-webapp-01 (web servers) subnet.",
+        "protocol": "Tcp",
+        "sourceAddressPrefix": "10.0.0.0/24",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.0.1.0/24",
+        "destinationPortRange": "80",
+        "access": "Allow",
+        "priority": 100,
+        "direction": "Inbound"
+      }
+    },
+    {
+      "name": "allow-rdp",
+      "properties": {
+        "description": "Allow rdp traffic from the sn-jumpbox-00 subnet.",
+        "protocol": "Tcp",
+        "sourceAddressPrefix": "10.1.0.0/24",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.0.1.0/24",
+        "destinationPortRange": "3389",
+        "access": "Allow",
+        "priority": 200,
+        "direction": "Inbound"
+      }
+    },
+    {
+      "name": "allow_rdp_from_on-premise",
+      "properties": {
+        "description": "Allow inbound RDP from the company's on-premise LAN.",
+        "protocol": "Tcp",
+        "sourceAddressPrefix": "192.168.2.0/24",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.0.1.0/24",
+        "destinationPortRange": "3389",
+        "access": "Allow",
+        "priority": 300,
+        "direction": "Inbound"
+      }
+    },
+    {
+      "name": "allow_winrm_from_on-premise",
+      "properties": {
+        "description": "Allow inbound WinRM from the company's on-premise LAN.",
+        "protocol": "Tcp",
+        "sourceAddressPrefix": "192.168.2.0/24",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.0.1.0/24",
+        "destinationPortRange": "5985",
+        "access": "Allow",
+        "priority": 400,
+        "direction": "Inbound"
+      }
+    },    
+    {
+      "name": "deny-tosubnet",
+      "properties": {
+        "description": "Deny all traffic from the virtual network.",
+        "protocol": "*",
+        "sourceAddressPrefix": "VirtualNetwork",
+        "sourcePortRange": "*",
+        "destinationAddressPrefix": "10.0.1.0/24",
+        "destinationPortRange": "*",
+        "access": "Deny",
+        "priority": 4000,
+        "direction": "Inbound"          
+      }
+    }
+  ]
+}
+
